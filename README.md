@@ -1,5 +1,5 @@
-dog
-===
+Django's Settings Control
+=========================
 
 Django settings file changes through a web interface and corresponding server restart.
 Its called a dog pointing to the fact that changing configuration on a testing server is tedios and monotonous job.
@@ -20,11 +20,11 @@ Changes will be productive only when the key value pair are mentioned in the fil
 Setup
 ================
 
-1. Run the command to start the pico server in super user if the server restart requires super user privileges.
+Run the command to start the pico server in super user if the server restart requires super user privileges.
 
     sudo python pico -m server
 
-2. File index.html has the following entry. The client.js has been utilized from the pico server checkout.
+File index.html has the following entry. The client.js has been utilized from the pico server checkout.
 
     <script type="text/javascript" src="client.js"></script>
 
