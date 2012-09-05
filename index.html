@@ -1,0 +1,77 @@
+<html>
+<head>
+        <title>Pico Example</title>
+        <script type="text/javascript" src="client.js"></script>
+        <script type="text/javascript">
+        pico.load('home');
+        pico.main = function() {
+            var displayMessage = function(message){
+                document.getElementById('message').innerHTML = message;
+            }
+            var statusMessage = function(message){
+                document.getElementById('status').innerHTML = message;
+            }
+            document.getElementById('bark').addEventListener('click', function(){
+                if (document.getElementById('key').innerHTML == ''){
+                    alert('You ought to select a key dude!');
+                }
+                else{
+                    document.getElementById('status').innerHTML = 'Waiting for status....';
+                    home.update(document.getElementById('key').innerHTML, document.getElementById('val').value, statusMessage);
+                    home.home(displayMessage);
+                }
+            });
+            document.getElementById('raw').addEventListener('click', function(){
+                home.raw(displayMessage);
+            });
+            document.getElementById('edit').addEventListener('click', function(){
+                home.home(displayMessage);
+            });
+            document.getElementById('readme').addEventListener('click', function(){
+                document.getElementById('imp').style.display = 'none';
+                document.getElementById('read').style.display = 'block';
+            });
+        home.home(displayMessage);
+        }
+        function change(key){
+            document.getElementById('key').innerHTML = key;
+            
+        }
+        </script>
+        <style>
+        .edi{
+         overflow: auto;
+         word-wrap: normal;
+         background-color: ghostWhite;
+         border: 1px solid #DEDEDE;
+         font-family: Monaco, "Courier New", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", monospace;
+         margin-bottom: 1em;
+         line-height: 1.5;
+         padding: .25em .5em .5em .5em !important;
+        }
+        .st{
+         color: #D14;
+         }
+        </style>
+</head>
+<body>
+  <div id='imp' style='display:block'>
+        <div class='edi'>
+        <table border='0'>
+        <tr><td id='key'></td><td><textarea id="val" rows="2" cols="20"></textarea></td>
+        <td><button type="button" id="bark">Bark</button></td><td id='status' class='st'></td>
+        <td><button type="button" id="edit">Edit</button></td>
+        <td><button type="button" id="raw">Raw</button></td>
+        <td><button type="button" id="readme">README</button></td>
+        </tr></table>
+        </div>
+        <div id="message" class="edi"></div>
+  </div>
+  <div id='read' style='display:none;text-align:center' class='edi'>
+    <p>THE DOG</p>
+    <p>Code: <a href='https://github.com/dan-boa/dog.git' target='_blank'>dog@git</a></p>
+    <p>pp is pointing to prod</p>
+  </div>
+  
+</body>
+</html>
