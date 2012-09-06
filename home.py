@@ -12,7 +12,7 @@ PATH ='/home/dan/checkout/project'
 ABSPATH = os.path.join(PATH, 'settings.py')
 
 # Server restart command
-CMD = 'sudo /etc/init.d/apache2 restart'
+CMD = '/etc/init.d/apache2 restart'
 
 def home():
     """

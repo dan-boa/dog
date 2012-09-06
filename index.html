@@ -1,7 +1,8 @@
 <html>
 <head>
         <title>Pico Example</title>
-        <script type="text/javascript" src="client.js"></script>
+        <script type="text/javascript" src="pico/client.js"></script>
+        <script type="text/javascript" src="md5.js"></script>
         <script type="text/javascript">
         pico.load('home');
         pico.main = function() {
@@ -31,12 +32,19 @@
                 document.getElementById('imp').style.display = 'none';
                 document.getElementById('read').style.display = 'block';
             });
-        home.home(displayMessage);
+            d = hex_md5(prompt('Enter authentication'));
+            if (d == '51b8955f757a4ca36ebed4693834f028'){
+                home.home(displayMessage);
+             } 
+            else{
+                alert('Wrong password!!! Barking...');
+            }
         }
         function change(key){
             document.getElementById('key').innerHTML = key;
             
         }
+            
         </script>
         <style>
         .edi{
