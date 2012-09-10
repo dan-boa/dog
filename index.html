@@ -7,7 +7,7 @@
         pico.load('home');
         pico.main = function() {
             var displayMessage = function(message){
-                document.getElementById('message').innerHTML = eval(message)[0]
+                document.getElementById('message').innerHTML = eval(message)[0];
                 document.getElementById('path').innerHTML = eval(message)[1];
                 document.getElementById('cmd').innerHTML = eval(message)[2];
             }
@@ -72,7 +72,7 @@
         <tr><td id='key'></td><td><textarea id="val" rows="2" cols="20"></textarea></td>
         <td><button type="button" id="bark">Bark</button></td><td id='status' class='st'></td>
         <td><button type="button" id="edit">Edit</button></td>
-        <!--<td><button type="button" id="raw">Raw</button></td>-->
+        <td><button type="button" id="raw">Raw</button></td>
         <td><button type="button" id="readme">README</button></td>
         </tr></table>
         </div>
