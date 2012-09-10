@@ -14,6 +14,11 @@ ABSPATH = os.path.join(PATH, 'settings.py')
 # Server restart command
 CMD = '/etc/init.d/apache2 restart'
 
+CHANGE = { 'API_TYPE':1,
+           'HIVE_PORT': 1,
+           'CONTROLLER_URL': 1,
+         }
+
 def home():
     """
     Read the file and arrange for edit
@@ -24,10 +29,11 @@ def home():
             line = line.strip()
             line = line.replace('\n','')
             if not forward(line):
-                continue 
-            key, value = line.split('=')[0], line.split('=')[1]
-            data[key] = value
-    return draw_home(data)
+                continue
+            key, value = line.split('=')[0].strip(), line.split('=')[1].strip()
+            if CHANGE.has_key(key):
+                data[key] = value
+    return [ draw_home(data), PATH, CMD ]
 
 def forward(line):
     """
@@ -58,17 +64,20 @@ def update(key, value):
 
     # Restart the server
     st, success = restart()
-    if not success:
+    st1, sanity_s = sanity()
+    if not (success and sanity_s):
         # Roll back as restart failed
         f_out = file(ABSPATH, 'w')
         f_out.write(sub)
         f_out.close()
-    return st
+        st = 'Restart failed...'
+    return st + ' and ' + st1
 
 def restart(timeout=5):
     """
     Restart the server
     """
+    status, success = "Restart successfull....", True
     #st = os.popen("sudo -S /etc/init.d/apache2 reload", 'w').write(passwd)    
     start = datetime.now()
     proc = subprocess.Popen(CMD, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -81,8 +90,16 @@ def restart(timeout=5):
             os.kill(proc.pid, signal.SIGKILL)
             os.waitpid(-1, os.WNOHANG)
             return "Server restart timeout", False
+    if vars(proc)['returncode'] == 1:
+        success = False
+    return status, success
 
-    return proc.stdout.read(), True
+def sanity():
+    proc = subprocess.Popen(SCMD, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    stresult = proc.communicate()[0]
+    if vars(proc)['returncode'] == 1:
+        return 'Sanity of settings file compromised', False
+    return 'Sanity of settings file assured', True
 
 def draw_home(dic):
     """
@@ -90,7 +107,7 @@ def draw_home(dic):
     """
     html="<table>"
     for key, value in dic.items():
-        html+="<tr><td><a href=\"javascript: change(\'"+key+"\');\">"+key+"</a></td><td>"+value+"</td></tr>"
+        html+="<tr><td style='width:150px'><a href=\"javascript: change(\'"+key+"\');\">"+key+"</a></td><td>"+value+"</td></tr>"
     html+="</table>"
     return html
 
