@@ -118,4 +118,4 @@ def raw():
     f = open(ABSPATH, 'r')
     data = f.read().replace('\n','<br/>')
     f.close()
-    return data
+    return [ data, PATH, CMD ]
